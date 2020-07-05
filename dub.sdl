@@ -1,0 +1,6 @@
+name "eink"
+description ""
+authors "jonas"
+copyright "Copyright © 2020, jonas"
+license "proprietary"
+libs "wiringPi"
