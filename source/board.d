@@ -41,17 +41,52 @@ class EinkBoard
   {
     exportGpioPins();
     wiringPiSetupSys();
+    digitalWrite(PIN_CS, 1);
     wiringPiSPISetup(0, 10_000_000);
     initializeBoard();
+    writeln("Setup done");
   }
 
   private void exportGpioPins()
   {
     foreach (Pin pin; pins)
-      executeShell("gpio export" ~ pin.number.to!string ~ " " ~ pin.isOutput ? "out" : "in");
+      executeShell("gpio export " ~ pin.number.to!string ~ " " ~ (pin.isOutput ? "out" : "in"));
   }
 
-  void reset()
+  private void sendCommand(ubyte command)
+  {
+    digitalWrite(PIN_DC, 0);
+    digitalWrite(PIN_CS, 0);
+    wiringPiSPIDataRW(0, &command, 1);
+    digitalWrite(PIN_CS, 1);
+  }
+
+  private void sendData(ubyte data)
+  {
+    digitalWrite(PIN_DC, 1);
+    digitalWrite(PIN_CS, 0);
+    wiringPiSPIDataRW(0, &data, 1);
+    digitalWrite(PIN_CS, 1);
+  }
+
+  private void waitForBusyRelease()
+  {
+    writeln("Waiting for busy release");
+    long cycles = 0;
+
+    while (true)
+    {
+      sendCommand(0x71); // Unknown
+      if (digitalRead(PIN_BUSY) == 0x01)
+        break;
+      cycles++;
+    }
+
+    writeln("Busy released after ", cycles, " cycles");
+    delay(200);
+  }
+
+  public void reset()
   {
     digitalWrite(PIN_CS, 1);
     digitalWrite(PIN_RST, 1);
@@ -60,33 +95,6 @@ class EinkBoard
     delay(10);
     digitalWrite(PIN_RST, 1);
     delay(10);
-  }
-
-  void sendCommand(ubyte command)
-  {
-    digitalWrite(PIN_DC, 0);
-    digitalWrite(PIN_CS, 0);
-    wiringPiSPIDataRW(0, &command, 1);
-    digitalWrite(PIN_CS, 1);
-  }
-
-  void sendData(ubyte data)
-  {
-    digitalWrite(PIN_DC, 1);
-    digitalWrite(PIN_CS, 0);
-    wiringPiSPIDataRW(0, &data, 1);
-    digitalWrite(PIN_CS, 1);
-  }
-
-  void waitForBusyRelease()
-  {
-    while (true)
-    {
-      sendCommand(0x71); // Unknown
-      if (digitalRead(PIN_BUSY) == 0x00)
-        break;
-    }
-    delay(200);
   }
 
   private void initializeBoard()
@@ -113,14 +121,7 @@ class EinkBoard
     sendData(0x77);
   }
 
-  void refreshDisplay()
-  {
-    sendCommand(0x12); // "Display refresh"
-    delay(100);
-    waitForBusyRelease();
-  }
-
-  void sleep()
+  public void sleep()
   {
     sendCommand(0x50); // Unknown
     sendData(0xf7);
@@ -131,7 +132,14 @@ class EinkBoard
     sendData(0xA5);
   }
 
-  void clearScreen()
+  public void refreshDisplay()
+  {
+    sendCommand(0x12); // "Display refresh"
+    delay(100);
+    waitForBusyRelease();
+  }
+
+  public void clearScreen()
   {
     immutable ushort width = (DISPLAY_WIDTH % 8 == 0) ? (DISPLAY_WIDTH / 8) : (DISPLAY_WIDTH / 8 + 1);
     immutable ushort height = DISPLAY_HEIGHT;
@@ -151,7 +159,7 @@ class EinkBoard
     refreshDisplay();
   }
 
-  void displayImage(const ubyte* blackimage, const ubyte* redimage)
+  public void displayImage(const ubyte* blackimage, const ubyte* redimage)
   {
     immutable ushort width = (DISPLAY_WIDTH % 8 == 0) ? (DISPLAY_WIDTH / 8) : (DISPLAY_WIDTH / 8 + 1);
     immutable ushort height = DISPLAY_HEIGHT;
