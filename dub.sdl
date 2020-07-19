@@ -1,6 +1,6 @@
 name "eink"
-description ""
 authors "jonas"
 copyright "Copyright © 2020, jonas"
 license "proprietary"
-libs "wiringPi"
+dependency "imageformats" version="~>7.0.2"
+libs "wiringPi" "z"

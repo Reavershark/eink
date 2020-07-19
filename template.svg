@@ -1,0 +1,14 @@
+<svg width="212" height="104">
+    <rect width="212" height="104" fill="#FFF" stroke="#FF0" stroke-width="4px" />
+    <text x="4" y="16" fill="#FF0" font-size="16" font-family="bold sans">${1}</text>
+    <text x="4" y="36" fill="#FF0" font-size="16" font-family="bold sans">${2}</text>
+    <text x="4" y="56" fill="#FF0" font-size="16" font-family="bold sans">${3}</text>
+    <text x="4" y="76" fill="#FF0" font-size="16" font-family="bold sans">${4}</text>
+    <text x="4" y="96" fill="#FF0" font-size="16" font-family="bold sans">${5}</text>
+
+    <text x="110" y="16" fill="#FF0" font-size="16" font-family="bold sans">${6}</text>
+    <text x="110" y="36" fill="#FF0" font-size="16" font-family="bold sans">${7}</text>
+    <text x="110" y="56" fill="#FF0" font-size="16" font-family="bold sans">${8}</text>
+    <text x="110" y="76" fill="#FF0" font-size="16" font-family="bold sans">${9}</text>
+    <text x="110" y="96" fill="#FF0" font-size="16" font-family="bold sans">${10}</text>
+</svg>

@@ -47,6 +47,11 @@ class EinkBoard
     writeln("Setup done");
   }
 
+  ~this()
+  {
+    sleep();
+  }
+
   private void exportGpioPins()
   {
     foreach (Pin pin; pins)
@@ -159,7 +164,27 @@ class EinkBoard
     refreshDisplay();
   }
 
-  public void displayImage(const ubyte* blackimage, const ubyte* redimage)
+  public void displayBlackImage(immutable ubyte[] image)
+  {
+    immutable ushort width = (DISPLAY_WIDTH % 8 == 0) ? (DISPLAY_WIDTH / 8) : (DISPLAY_WIDTH / 8 + 1);
+    immutable ushort height = DISPLAY_HEIGHT;
+
+    // Black data
+    sendCommand(0x10);
+    foreach (i; 0 .. height)
+      foreach (j; 0 .. width)
+        sendData(image[j + i * width]);
+
+    // Red data
+    sendCommand(0x13);
+    foreach (i; 0 .. height)
+      foreach (j; 0 .. width)
+        sendData(0xFF);
+
+    refreshDisplay();
+  }
+
+  public void displayImage(immutable ubyte[] blackimage, immutable ubyte[] redimage)
   {
     immutable ushort width = (DISPLAY_WIDTH % 8 == 0) ? (DISPLAY_WIDTH / 8) : (DISPLAY_WIDTH / 8 + 1);
     immutable ushort height = DISPLAY_HEIGHT;
