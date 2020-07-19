@@ -8,6 +8,7 @@ eink.dll
 eink.a
 eink.lib
 eink-test-*
+/eink
 *.exe
 *.o
 *.obj
