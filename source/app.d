@@ -13,6 +13,8 @@ import std.file : readText;
 import std.json;
 import std.net.curl;
 import std.conv : to;
+import std.math : round;
+import std.datetime;
 
 void main()
 {
@@ -27,13 +29,20 @@ void main()
   string data = weatherRequest();
   JSONValue[] j = parseJSON(data).arrayNoRef();
 
-  foreach (i, forecast; j[0..10])
+  foreach (i, forecast; j[0 .. 10])
   {
-    string original = "${" ~ (i+1).to!string ~ "}";
-    string date = forecast["observation_time"]["value"].to!string[12..14];
-    date = (date.to!int + 2).to!string ~ "u";
+    string original = "${" ~ (i + 1).to!string ~ "}";
+
+    SysTime utcDate = SysTime.fromISOExtString(forecast["observation_time"]["value"].str());
+    string hour = utcDate.toLocalTime().hour().to!string ~ "u";
+    if (hour.length == 2)
+      hour = hour ~ " ";
+
     string value = forecast["precipitation"]["value"].to!string;
-    svg.source = svg.source.replace(original, date ~ " - " ~ value);
+    if (value != "0")
+      value = (round(value.to!double * 1000.0) / 1000.0).to!string;
+
+    svg.source = svg.source.replace(original, hour ~ " - " ~ value);
   }
 
   svg.source.writeln;
