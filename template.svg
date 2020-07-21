@@ -1,19 +1,19 @@
 <svg width="212" height="104">
     <rect width="212" height="104" fill="#FFF" stroke="#FFF" stroke-width="0px" />
     <g>
-        <rect x="0" y="0" width="104" height="104" fill="#FFF" stroke="#FF0" stroke-width="2px" ry="5" />
-        <text x="4" y="16" fill="#FF0" font-size="16" font-family="bold sans">${1}</text>
-        <text x="4" y="36" fill="#FF0" font-size="16" font-family="bold sans">${2}</text>
-        <text x="4" y="56" fill="#FF0" font-size="16" font-family="bold sans">${3}</text>
-        <text x="4" y="76" fill="#FF0" font-size="16" font-family="bold sans">${4}</text>
-        <text x="4" y="96" fill="#FF0" font-size="16" font-family="bold sans">${5}</text>
+        <rect x="0" y="0" width="104" height="104" fill="#FFF" stroke="#FF0" stroke-width="2px" />
+        <text x="4" y="16" fill="#FF0" font-size="16" font-family="bold monospace">${1}</text>
+        <text x="4" y="36" fill="#FF0" font-size="16" font-family="bold monospace">${2}</text>
+        <text x="4" y="56" fill="#FF0" font-size="16" font-family="bold monospace">${3}</text>
+        <text x="4" y="76" fill="#FF0" font-size="16" font-family="bold monospace">${4}</text>
+        <text x="4" y="96" fill="#FF0" font-size="16" font-family="bold monospace">${5}</text>
     </g>
     <g>
-        <rect x="108" y="0" width="104" height="104" fill="#FFF" stroke="#FF0" stroke-width="2px" ry="5"/>
-        <text x="110" y="16" fill="#FF0" font-size="16" font-family="bold sans">${6}</text>
-        <text x="110" y="36" fill="#FF0" font-size="16" font-family="bold sans">${7}</text>
-        <text x="110" y="56" fill="#FF0" font-size="16" font-family="bold sans">${8}</text>
-        <text x="110" y="76" fill="#FF0" font-size="16" font-family="bold sans">${9}</text>
-        <text x="110" y="96" fill="#FF0" font-size="16" font-family="bold sans">${10}</text>
+        <rect x="108" y="0" width="104" height="104" fill="#FFF" stroke="#FF0" stroke-width="2px" />
+        <text x="110" y="16" fill="#FF0" font-size="16" font-family="bold monospace">${6}</text>
+        <text x="110" y="36" fill="#FF0" font-size="16" font-family="bold monospace">${7}</text>
+        <text x="110" y="56" fill="#FF0" font-size="16" font-family="bold monospace">${8}</text>
+        <text x="110" y="76" fill="#FF0" font-size="16" font-family="bold monospace">${9}</text>
+        <text x="110" y="96" fill="#FF0" font-size="16" font-family="bold monospace">${10}</text>
     </g>
 </svg>
